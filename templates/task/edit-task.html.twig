@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TaskController!{% endblock %}
+
+{% block body %}
+    {{ form_start(form, {'method': 'POST'}) }}
+    <tr>
+        <td>Task name: </td>
+        <td>{{ form_widget(form.name) }}</td>
+        <td>{{ form_errors(form.name) }}</td>
+    <tr>
+        <td>Task content: </td>
+        <td>{{ form_widget(form.content) }}</td>
+        <td>{{ form_errors(form.content) }}</td>
+    </tr>
+    <tr>
+        <button class="btn btn-primary" type="submit">Save</button>
+    </tr>
+
+    {{ form_end(form) }}
+{% endblock %}

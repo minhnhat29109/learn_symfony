@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block body%}
+    <h2>List Task</h2>
+    {% for message in app.flashes('success') %}
+        {{ message }}
+    {% endfor %}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Content</th>
+            <th>Action</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.content }}</td>
+                <td>
+                    <a href="{{ path('edit-task', {id:task.id})}}" class="btn btn-warning">Edit</a>
+                    <a href="{{ path('delete-task', {id:task.id})}}" onclick="return (confirm('Delete?'))" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ path('new-task') }}" class="btn btn-primary">New Task</a>
+{% endblock %}
+
+
