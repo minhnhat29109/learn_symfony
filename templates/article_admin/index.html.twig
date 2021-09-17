@@ -3,33 +3,28 @@
 {% block title %}Hello ArticleAdminController!{% endblock %}
 
 {% block body %}
-        {% for message in app.flashes('success') %}
-                {{ message }}
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>author</th>
+            <th>Action</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content }}</td>
+                <td>{{ article.author.firstName }}</td>
+
+                <td>
+                    <a href="{{ path('edit-task', {id:article.id})}}" class="btn btn-warning">Edit</a>
+                    <a href="{{ path('delete-task', {id:article.id})}}" onclick="return (confirm('Delete?'))" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
         {% endfor %}
-        {{ form_start(articleForm, {'method': 'POST'}) }}
-                <table>
-                        <tr>
-                        <td>Name:</td>
-                        <td>
-                                {{ form_widget(articleForm.name) }}
-                                <br>
-                                {{ form_errors(articleForm.name) }}
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>Sort no:</td>
-                        <td>
-                                {{ form_widget(articleForm.sort_no) }}
-                                <br>
-                                {{ form_errors(articleForm.sort_no) }}
-                        </td>
-                        </tr>
-                        <tr>
-                        <td></td>
-                        <td>{{ form_widget(articleForm.save) }}</td>
-                        </tr>
-                </table>
-                {{ form_end(articleForm) }}
+    </table>
         
 {% endblock %}
 

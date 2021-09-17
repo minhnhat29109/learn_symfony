@@ -121,8 +121,14 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.1.0"
     },
+    "knplabs/knp-markdown-bundle": {
+        "version": "1.9.0"
+    },
     "laminas/laminas-code": {
         "version": "4.4.2"
+    },
+    "michelf/php-markdown": {
+        "version": "1.9.0"
     },
     "monolog/monolog": {
         "version": "1.26.1"
@@ -409,6 +415,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "25e3c964d3aee480b3acc3114ffb7940c89edfed"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v4.4.27"
     },
@@ -530,9 +548,6 @@
     },
     "symfony/serializer": {
         "version": "v4.4.27"
-    },
-    "symfony/serializer-pack": {
-        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"

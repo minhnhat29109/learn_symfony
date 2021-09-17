@@ -8,11 +8,16 @@ use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Michelf\MarkdownInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ArticleAdminController extends AbstractController
 {
     /**
@@ -53,14 +58,16 @@ class ArticleAdminController extends AbstractController
 
 
     /**
-     * @Route("new",name="article_show")
+     * @Route("show",name="article_show")
      */
-    public function show(Article $article, ArticleRepository $articleresponse)
+    public function show(ArticleRepository $articleresponse, MarkdownInterface $markdown)
     {
-        // $article = $articleresponse->findNewById($id);
+//        dd($markdown);
+//        die();
+         $articles = $articleresponse->findAll();
         // dd($article);
         return $this->render('article_admin/index.html.twig', [
-            'article' => $article
+            'articles' => $articles
         ]);
     }
 

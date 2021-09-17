@@ -2,8 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\ApiToken;
+use App\Entity\Article;
+use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -22,9 +26,20 @@ class UserFixture extends Fixture
             $user->setFirstName('nhat'.$i);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'minhnhat2910'));
             $user->setRoles(['ROLE_USER']);
+            $apiToken1 = new ApiToken($user);
+            $apiToken2 = new ApiToken($user);
+
+            $task = new Task();
+            $task->setName('aloalo')
+                ->setContent('aloalo')
+                ->setAuthor($user);
+            $manager->persist($task);
+            $manager->persist($apiToken1);
+            $manager->persist($apiToken2);
             $manager->persist($user);
         }
-        $manager->flush();
+
+
         for ($i = 0; $i < 5; $i++) {
             $user = new User();
             $user->setEmail('admin'.$i.'@gmail.com');
@@ -38,16 +53,17 @@ class UserFixture extends Fixture
             $user->setEmail('adminarticle'.$i.'@gmail.com');
             $user->setFirstName('nhat'.$i);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'minhnhat2910'));
-            $user->setRoles(['ROLE_ADMIN_NEWS']);
+            $user->setRoles(['ROLE_ADMIN_ARTICLE']);
             $manager->persist($user);
         }
-        $manager->flush();
+
+
         for ($i = 0; $i < 5; $i++) {
             $user = new User();
             $user->setEmail('adminnews'.$i.'@gmail.com');
             $user->setFirstName('admin'.$i);
             $user->setPassword($this->passwordEncoder->encodePassword($user, 'minhnhat2910'));
-            $user->setRoles(['ROLE_ADMIN_ARTICLE']);
+            $user->setRoles(['ROLE_ADMIN_NEWS']);
             $manager->persist($user);
         }
         $manager->flush();

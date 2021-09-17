@@ -4,6 +4,9 @@
     {% for message in app.flashes('success') %}
         {{ message }}
     {% endfor %}
+    <div>
+        {{ content|raw }}
+    </div>
     <table class="table">
         <tr>
             <th>ID</th>
