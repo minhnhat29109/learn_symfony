@@ -25,6 +25,12 @@ class MarkdownHelper
         $this->isDebug = $isDebug;
         $this->security = $security;
     }
+
+    /**
+     * @param string $source
+     * @return string
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     public function parse(string $source): string
     {
         if (stripos($source, 'bacon') !== false) {

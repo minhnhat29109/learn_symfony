@@ -35,6 +35,31 @@ services:
 #    App\Service\MarkdownHelper:
 #        arguments:
 #            $logger: '@monolog.logger.markdown'
+    # this is the service's id
+    site_update_manager.superadmin:
+        class: App\Service\SiteUpdateManager
+        # you CAN still use autowiring: we just want to show what it looks like without
+        autowire: false
+        # manually wire all arguments
+        arguments:
+            - '@App\Service\MessageGenerator'
+            - '@mailer'
+            - 'nhatdm1@smartosc.com'
+
+    site_update_manager.normal_users:
+        class: App\Service\SiteUpdateManager
+        autowire: false
+        arguments:
+            - '@App\Service\MessageGenerator'
+            - '@mailer'
+            - 'contact@example.com'
+    App\Service\SiteUpdateManager: '@site_update_manager.superadmin'
+#        arguments:
+#            $adminMail: 'nhatdm1@smartosc.com'
+
+    # explicitly configure the service
+#    App\Service\PublicService:
+#        public: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
