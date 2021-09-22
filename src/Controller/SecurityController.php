@@ -39,7 +39,7 @@ class SecurityController extends AbstractController
         EntityManagerInterface $em,
         GuardAuthenticatorHandler $authenticatorHandler,
         LoginFormAuthenticator $formAuthenticator
-    ){
+    ) {
         // TODO - use Symfony forms & validation
         if ($request->isMethod('POST')) {
             $user = new User();
@@ -70,5 +70,4 @@ class SecurityController extends AbstractController
     {
 //        throw new \Exception('Will be intercepted before getting here');
     }
-
 }

@@ -44,8 +44,8 @@ class TaskController extends AbstractController
             $em->persist($task);
             $em->flush();
             $this->addFlash(
-               'success',
-               'add success'
+                'success',
+                'add success'
             );
 
             return $this->redirectToRoute('list-task');
@@ -60,7 +60,7 @@ class TaskController extends AbstractController
      * @Route ("list-task", name="list-task")
      * @IsGranted ("ROLE_USER")
      */
-    public function show(EntityManagerInterface $em,  MarkdownHelper $markdownHelper)
+    public function show(EntityManagerInterface $em, MarkdownHelper $markdownHelper)
     {
 //        $message = $slack->createMessage()
 //            ->from('Nhat')
@@ -96,8 +96,7 @@ labore minim pork belly spare ribs cupim short loin in. Elit exercitation eiusmo
     {
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
             $em->persist($task);
             $em->flush();

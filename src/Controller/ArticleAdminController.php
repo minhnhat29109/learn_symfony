@@ -23,18 +23,19 @@ class ArticleAdminController extends AbstractController
     /**
      * @Route("admin/article/new", name="admin_article_new")
      */
-    public function new(EntityManagerInterface $em, Request $request) {
-    //    $article = new Article();
-    //    $article->setTitle("Ha noi het covid");
-    //    $article->setSlug("ha-noi-het-covid"."-".rand(100,999));
-    //    $article->setContent("hihiihi");
-    //    $article->setPublishedAt(new DateTime());
-    //    $article->setAuthor("Thao")
-    //             ->setHertCount(rand(11,99))
-    //             ->setImageFileName('download.jpeg');
-    //    $em->persist($article);
-    //    $em->flush();
-    
+    public function new(EntityManagerInterface $em, Request $request)
+    {
+        //    $article = new Article();
+        //    $article->setTitle("Ha noi het covid");
+        //    $article->setSlug("ha-noi-het-covid"."-".rand(100,999));
+        //    $article->setContent("hihiihi");
+        //    $article->setPublishedAt(new DateTime());
+        //    $article->setAuthor("Thao")
+        //             ->setHertCount(rand(11,99))
+        //             ->setImageFileName('download.jpeg');
+        //    $em->persist($article);
+        //    $em->flush();
+
 
         $form = $this->createForm(ArticleFormType::class);
         $form->handleRequest($request);
@@ -51,7 +52,7 @@ class ArticleAdminController extends AbstractController
         return $this->render('article_admin/index.html.twig', [
             'articleForm' => $form->createView(),
         ]);
-    //    return new Response(sprintf(
+        //    return new Response(sprintf(
     //         'Hiya! New Article id: '.$article->getId().' slug:'.$article->getSlug()
     //     ));
     }
@@ -64,7 +65,7 @@ class ArticleAdminController extends AbstractController
     {
 //        dd($markdown);
 //        die();
-         $articles = $articleresponse->findAll();
+        $articles = $articleresponse->findAll();
         // dd($article);
         return $this->render('article_admin/index.html.twig', [
             'articles' => $articles

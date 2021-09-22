@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Security\Voter;
+
 use App\Entity\Article;
 use App\Entity\Task;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 class TaskVoter extends Voter
 {
     private $security;
@@ -20,6 +23,13 @@ class TaskVoter extends Voter
         return in_array($attribute, ['MANAGE'])
             && $subject instanceof Task;
     }
+
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @param TokenInterface $token
+     * @return bool
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         /** @var Task $subject */

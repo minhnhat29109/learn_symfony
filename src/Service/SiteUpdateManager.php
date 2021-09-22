@@ -32,12 +32,11 @@ class SiteUpdateManager
         $this->adminMail = $adminMail;
     }
 
-
     /**
      * @return bool
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function notifyOfSiteUpdate() : bool
+    public function notifyOfSiteUpdate(): bool
     {
         $happyMessage =$this->messageGenerator->getHappyMessage();
         $email = (new Email())

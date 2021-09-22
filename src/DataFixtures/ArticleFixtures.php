@@ -9,7 +9,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
-
     private static $articleImages = [
         'asteroid.jpeg',
         'mercury.jpeg',

@@ -57,7 +57,7 @@ class Article
      */
     private $imageFileName;
 
-  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -148,6 +148,4 @@ class Article
         $this->author = $author;
         return $this;
     }
-
-
 }

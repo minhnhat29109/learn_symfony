@@ -22,7 +22,7 @@ class MessageGenerator
     /**
      * @return string
      */
-    public function getHappyMessage() : string
+    public function getHappyMessage(): string
     {
         $this->logger->info('hello symfony');
         return "test Message sevice";

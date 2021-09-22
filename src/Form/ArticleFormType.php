@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Article;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ArticleFormType extends AbstractType 
+class ArticleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

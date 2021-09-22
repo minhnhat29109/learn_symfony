@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Task;
@@ -14,7 +15,7 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    $builder
+        $builder
         ->add('name', TextType::class, [
             'required' => false,
             'constraints' => [
@@ -37,7 +38,7 @@ class TaskType extends AbstractType
         ])
         ;
     }
-    
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

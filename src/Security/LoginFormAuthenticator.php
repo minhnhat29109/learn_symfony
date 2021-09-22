@@ -37,6 +37,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             && $request->isMethod('POST');
     }
 
+
     public function getCredentials(Request $request)
     {
 //        dump($request->request->all());
@@ -78,8 +79,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
 //        dd('success!');
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey))
-        {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
         return new RedirectResponse($this->router->generate('list-task'));
