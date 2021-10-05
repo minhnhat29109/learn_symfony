@@ -2,16 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Service\MarkdownHelper;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Michelf\MarkdownInterface;
 use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,6 +28,10 @@ class TaskController extends AbstractController
     /**
      * @Route("admin/new-task",name="new-task")
      * @IsGranted("ROLE_USER")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|void
      */
     public function new(EntityManagerInterface $em, Request $request)
     {
@@ -39,8 +39,10 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /**@var Task $task */
+            /** @var Task $task */
+//            dd($form->getData());
             $task = $form->getData();
+            $task->setAuthor($this->getUser());
             $em->persist($task);
             $em->flush();
             $this->addFlash(
@@ -48,17 +50,20 @@ class TaskController extends AbstractController
                 'add success'
             );
 
-            return $this->redirectToRoute('list-task');
+            return $this->json($task);
         }
 
-        return $this->render('task/index.html.twig', [
-            'form' => $form->createView()
-        ]);
+//        return $this->json($task);
     }
 
     /**
      * @Route ("list-task", name="list-task")
      * @IsGranted ("ROLE_USER")
+     * @param EntityManagerInterface $em
+     * @param MarkdownHelper $markdownHelper
+     *
+     * @return Response
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function show(EntityManagerInterface $em, MarkdownHelper $markdownHelper)
     {
@@ -91,6 +96,11 @@ labore minim pork belly spare ribs cupim short loin in. Elit exercitation eiusmo
     /**
      * @Route ("edit-task/{id}", name="edit-task")
      * @IsGranted ("MANAGE", subject="task")
+     * @param Task $task
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function edit(Task $task, Request $request, EntityManagerInterface $em)
     {
@@ -110,9 +120,14 @@ labore minim pork belly spare ribs cupim short loin in. Elit exercitation eiusmo
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route ("delete-task/{id}", name="delete-task")
-    */
+     * @param Task $id
+     * @param EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function delete(Task $id, EntityManagerInterface $em)
     {
 //        $task = $em->getRepository(Task::class)->find($id);

@@ -100,6 +100,7 @@ class ArticleAdminController extends AbstractController
         }
         $em->remove($new);
         $em->flush();
+
         return new Response(sprintf(
             'Delete Sucess'
         ));

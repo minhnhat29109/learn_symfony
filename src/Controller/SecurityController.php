@@ -17,6 +17,9 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     *
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -24,6 +27,7 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
@@ -32,6 +36,13 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param EntityManagerInterface $em
+     * @param GuardAuthenticatorHandler $authenticatorHandler
+     * @param LoginFormAuthenticator $formAuthenticator
+     *
+     * @return Response|null
      */
     public function register(
         Request $request,
@@ -52,6 +63,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 //            return $this->redirectToRoute("app_account");
+
             return $authenticatorHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,

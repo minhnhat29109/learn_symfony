@@ -1,3 +1,41 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+api_login:
+    path: /api/login
+    controller: App\Controller\Api\SecurityController::login
+    methods: POST
+
+new_user:
+    path: /api/user
+    controller: App\Controller\Api\TestApiController::store
+    methods: POST
+
+show_user:
+    path: /api/user/{id}
+    controller: App\Controller\Api\TestApiController::show
+    methods: GET
+    requirements:
+        id: '\d+'
+
+update_user:
+    path: /api/user/{id}
+    controller: App\Controller\Api\TestApiController::update
+    methods: POST
+    requirements:
+        id: '\d+'
+
+delete_user:
+    path: /api/user/{id}
+    controller: App\Controller\Api\TestApiController::delete
+    methods: DELETE
+    requirements:
+        id: '\d+'
+
+task_list:
+    path: /api/v1/tasks
+    controller: App\Controller\Api\TaskControllerApi::indexAction
+    methods: [GET]
+
+task_create:
+    path: /api/v1/task/create
+    controller: App\Controller\Api\TaskControllerApi::taskCreate
+    methods: [POST]
+

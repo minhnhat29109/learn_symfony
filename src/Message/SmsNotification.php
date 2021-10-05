@@ -7,18 +7,31 @@ class SmsNotification
     /**
      * @var string
      */
-    private $content;
+    private $message;
+    /**
+     * @var array
+     */
+    private $user;
 
-    public function __construct(string $content)
+    public function __construct(string $message, array $user)
     {
-        $this->content = $content;
+        $this->message = $message;
+        $this->user = $user;
     }
 
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getUser(): array
     {
-        return $this->content;
+        return $this->user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 }

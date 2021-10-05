@@ -12,6 +12,8 @@ class SmsNotificationHandler implements MessageHandlerInterface
      */
     public function __invoke(SmsNotification $messgae)
     {
-        // TODO: Implement __invoke() method.
+        foreach ($messgae->getUser() as $user) {
+            echo ('send notification to '.$user);
+        }
     }
 }

@@ -21,11 +21,11 @@ class SiteUpdateManager
     private $adminMail;
 
     /**
-     * @param MessageGenerator $messageGenerator
+     * @param $messageGenerator
      * @param MailerInterface $mailer
      * @param string $adminMail
      */
-    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminMail)
+    public function __construct( $messageGenerator, MailerInterface $mailer, string $adminMail)
     {
         $this->messageGenerator = $messageGenerator;
         $this->mailer = $mailer;
