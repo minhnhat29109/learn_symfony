@@ -4,10 +4,12 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class TestApiController extends AbstractApiController
@@ -21,14 +23,33 @@ class TestApiController extends AbstractApiController
      */
     private $passwordEncoder;
     /**
-     * @var EntityRepository
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserRepository $userRepository
      */
     public function __construct(
         EntityManagerInterface $em,
-        UserPasswordEncoderInterface $passwordEncoder
+        UserPasswordEncoderInterface $passwordEncoder,
+        UserRepository $userRepository
     ) {
         $this->em = $em;
         $this->passwordEncoder = $passwordEncoder;
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @return Response
+     */
+    public function index(): Response
+    {
+        $users = $this->userRepository->findAll();
+
+        return $this->Respond($users, Response::HTTP_OK);
     }
 
     /**
@@ -42,10 +63,12 @@ class TestApiController extends AbstractApiController
 
         $form = $this->buildForm(RegisterType::class);
         $form->handleRequest($request);
+
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return $this->Respond($form, Response::HTTP_BAD_REQUEST);
+            throw new BadRequestHttpException('alo alo');
         }
 
+        /**@var User $user */
         $user = $form->getData();
         $user->setPassword($this->passwordEncoder->encodePassword($user, $request->get('password')));
         $user->setRoles(['ROLE_USER']);
@@ -61,9 +84,9 @@ class TestApiController extends AbstractApiController
      *
      * @return Response
      */
-    public function show(User $user)
+    public function show(User $user): Response
     {
-        return $this->Respond($user);
+        return $this->Respond($user, Response::HTTP_OK);
     }
 
     /**
@@ -74,10 +97,8 @@ class TestApiController extends AbstractApiController
      */
     public function update(
         User $user,
-        Request $request,
-        UserPasswordEncoderInterface $passwordEncoder
+        Request $request
     ): Response {
-//        dd($user);
         $form = $this->buildForm(RegisterType::class, $user, [
             'method' => $request->getMethod(),
         ]);
@@ -94,7 +115,7 @@ class TestApiController extends AbstractApiController
         $this->em->persist($user);
         $this->em->flush();
 
-        return $this->Respond($user, Response::HTTP_OK);
+        return $this->Respond($user);
     }
 
     /**
@@ -107,6 +128,6 @@ class TestApiController extends AbstractApiController
         $this->em->remove($user);
         $this->em->flush();
 
-        return $this->Respond($user, Response::HTTP_OK);
+        return $this->Respond($user);
     }
 }

@@ -6,7 +6,6 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Service\MarkdownHelper;
 use Doctrine\ORM\EntityManagerInterface;
-use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

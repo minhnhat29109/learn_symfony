@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  workspace:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: symfony
+    working_dir: /var/www/html
+    volumes:
+        - .:/var/www/html
+        - ./docker/nginx_log:/var/log/nginx
+        - ./docker/php-fpm/php-fpm.log:/var/log/php-fpm.log
+        - ./docker/config/app.conf:/etc/nginx/conf.d/app.conf
+    ports:
+      - "8000:80"
+    links: 
+        - mysql
+  mysql:
+    image: mysql:5.7
+    container_name: mysql5.7
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: nhatpass
+      MYSQL_DATABASE: symfony_db
+      MYSQL_USER: nhatuser
+      MYSQL_PASSWORD: nhatpass
+    ports:
+      - "3306:3306"

@@ -8,6 +8,11 @@ new_user:
     controller: App\Controller\Api\TestApiController::store
     methods: POST
 
+get_users:
+    path: /api/user
+    controller: App\Controller\Api\TestApiController::index
+    methods: GET
+
 show_user:
     path: /api/user/{id}
     controller: App\Controller\Api\TestApiController::show
